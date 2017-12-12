@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">仿知乎广告</string>
+    <string name="title">标题</string>
+    <string name="content">内容</string>
+</resources>
