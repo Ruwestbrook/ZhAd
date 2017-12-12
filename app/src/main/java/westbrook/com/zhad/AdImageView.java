@@ -29,34 +29,27 @@ public class AdImageView extends android.support.v7.widget.AppCompatImageView {
     public AdImageView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
-
-
-
     private RectF mBitmapRectF;
     private Bitmap mBitmap;
-
     private int mMinDy;
-
+    private int mDy;
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-
         mMinDy = h;
+        /* Return the view's drawable, or null if no drawable has been
+         assigned.
+         */
         Drawable drawable = getDrawable();
-
         if (drawable == null) {
             return;
         }
-
-        mBitmap = drawableToBitamp(drawable);
-        mBitmapRectF = new RectF(0, 0,
-                w,
-                mBitmap.getHeight() * w / mBitmap.getWidth());
-
+        mBitmap = drawableToBitmap(drawable);
+        mBitmapRectF = new RectF(0, 0, w, mBitmap.getHeight() * w / mBitmap.getWidth());
     }
 
 
-    private Bitmap drawableToBitamp(Drawable drawable) {
+    private Bitmap drawableToBitmap(Drawable drawable) {
         if (drawable instanceof BitmapDrawable) {
             BitmapDrawable bd = (BitmapDrawable) drawable;
             return bd.getBitmap();
@@ -70,8 +63,6 @@ public class AdImageView extends android.support.v7.widget.AppCompatImageView {
         return bitmap;
     }
 
-    private int mDy;
-
     public void setDy(int dy) {
 
         if (getDrawable() == null) {
@@ -84,6 +75,7 @@ public class AdImageView extends android.support.v7.widget.AppCompatImageView {
         if (mDy > mBitmapRectF.height() - mMinDy) {
             mDy = (int) (mBitmapRectF.height() - mMinDy);
         }
+        //重绘
         invalidate();
     }
 
@@ -93,8 +85,21 @@ public class AdImageView extends android.support.v7.widget.AppCompatImageView {
             return;
         }
         canvas.save();
-        canvas.translate(0, -mDy);
+        canvas.translate(0, -mDy);  //canvas平移 往X轴正方向和Y轴正方向
+        /*
+        bitmap	Bitmap: The bitmap to be drawn
+        This value must never be null.
+        src	Rect: May be null. The subset of the bitmap to be drawn
+        dst	RectF: The rectangle that the bitmap will be scaled/translated to fit into
+        This value must never be null.
+        paint	Paint: May be null. The paint used to draw the bitmap
+         */
         canvas.drawBitmap(mBitmap, null, mBitmapRectF, null);
+        /*
+          This call balances a previous call to save(), and is used to remove all modifications to the matrix/clip state since the last save call.
+         It is an error to call restore() more times than save() was called
+         */
+
         canvas.restore();
     }
 }
