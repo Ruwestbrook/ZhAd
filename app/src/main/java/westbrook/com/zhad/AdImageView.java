@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -18,6 +19,7 @@ import android.widget.ImageView;
  */
 
 public class AdImageView extends android.support.v7.widget.AppCompatImageView {
+    private static final String TAG = "MainActivity";
     public AdImageView(Context context) {
         this(context,null);
     }
@@ -33,8 +35,19 @@ public class AdImageView extends android.support.v7.widget.AppCompatImageView {
     private Bitmap mBitmap;
     private int mMinDy;
     private int mDy;
+    /**
+     * This is called during layout when the size of this view has changed. If
+     * you were just added to the view hierarchy, you're called with the old
+     * values of 0.
+     *
+     * @param w Current width of this view.
+     * @param h Current height of this view.
+     * @param oldw Old width of this view.
+     * @param oldh Old height of this view.
+     */
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        Log.d(TAG, "onSizeChanged: 改变大小");
         super.onSizeChanged(w, h, oldw, oldh);
         mMinDy = h;
         /* Return the view's drawable, or null if no drawable has been

@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -29,29 +30,32 @@ class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         if (position > 0 && position % 6 == 0) {
            holder.content.setVisibility(View.INVISIBLE);
            holder.title.setVisibility(View.INVISIBLE);
+           holder.imageView.setVisibility(View.INVISIBLE);
            holder.adImageView.setVisibility(View.VISIBLE);
         } else {
             holder.content.setVisibility(View.VISIBLE);
             holder.title.setVisibility(View.VISIBLE);
+            holder.imageView.setVisibility(View.VISIBLE);
             holder.adImageView.setVisibility(View.INVISIBLE);
         }
     }
 
     @Override
     public int getItemCount() {
-        return 100;
+        return 30;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
         AdImageView adImageView;
         TextView title;
         TextView content;
-
+        ImageView imageView;
         ViewHolder(View view){
             super(view);
             adImageView= (AdImageView) view.findViewById(R.id.id_iv_ad);
             title= (TextView) view.findViewById(R.id.id_tv_title);
             content= (TextView) view.findViewById(R.id.id_tv_desc);
+            imageView= (ImageView) view.findViewById(R.id.picture);
         }
     }
 }
